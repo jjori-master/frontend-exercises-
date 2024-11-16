@@ -16,3 +16,27 @@
 Remove-Item -Path "./todolist-basic/*" -Recurse -Force
 Copy-Item -Path "./todolist-ui/*" -Destination "./todolist-basic" -Recurse -Force -Exclude "node_modules"
 ```
+
+#### todolist-use-reducer
+
+- `useReducer` 훅을 사용하는 Todo List 연습 공간입니다.
+- 연습 방법은 두가지 입니다.
+
+  - `useState` 훅으로 제작된 `todolist-basic` 프로젝트에서 시작해서 `useState`를 `useReducer`로 업그레이드 하는 연습.
+  - `todolist-ui` 로 부터 시작해서 처음 부터 `useReducer`를 사용하는 연습 방법입니다.
+
+- `useReducer` 업그레이드
+
+```bash
+# Windows Powershell
+Remove-Item -Path "./todolist-use-reducer/*" -Recurse -Force
+Copy-Item -Path "./todolist-basic/*" -Destination "./todolist-use-reducer" -Recurse -Force -Exclude "node_modules"
+```
+
+- `useReducer` 사용
+
+```bash
+# Windows Powershell
+Remove-Item -Path "./todolist-use-reducer/*" -Recurse -Force
+Copy-Item -Path "./todolist-ui/*" -Destination "./todolist-use-reducer" -Recurse -Force -Exclude "node_modules"
+```
