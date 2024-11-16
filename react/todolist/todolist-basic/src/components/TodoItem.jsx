@@ -1,12 +1,14 @@
 import './TodoItem.css';
 
-const TodoItem = () => {
+const TodoItem = ({ id, isDone, content, date, onUpdate, onDelete }) => {
   return (
     <div className="TodoItem">
-      <input type="checkbox" />
-      <div className="content">Todo...</div>
-      <div className="date">Date</div>
-      <button type="button">삭제</button>
+      <input type="checkbox" checked={isDone} onChange={() => onUpdate(id)} />
+      <div className="content">{content}</div>
+      <div className="date">{new Date(date).toLocaleDateString()}</div>
+      <button type="button" onClick={() => onDelete(id)}>
+        삭제
+      </button>
     </div>
   );
 };
