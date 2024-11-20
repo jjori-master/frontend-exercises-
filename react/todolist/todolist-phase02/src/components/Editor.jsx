@@ -1,11 +1,13 @@
 import './Editor.css';
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
+import { TodoDispatchContext } from '../App';
 
-const Editor = ({ onCreate }) => {
+const Editor = () => {
   const [content, setContent] = useState('');
   const inputRef = useRef();
+  const { onCreate } = useContext(TodoDispatchContext);
 
-  const onChange = e => {
+  const onChange = (e) => {
     setContent(e.target.value);
   };
 
@@ -18,7 +20,7 @@ const Editor = ({ onCreate }) => {
     setContent('');
   };
 
-  const onKeyDown = e => {
+  const onKeyDown = (e) => {
     if (e.keyCode !== 13) return;
     onSubmit();
   };
