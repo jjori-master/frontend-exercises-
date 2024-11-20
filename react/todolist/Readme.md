@@ -43,6 +43,7 @@ rsync -av --exclude="node_modules" ./todolist-ui/ ./todolist-phase01/
   - [ ] React Dev Tools의 어떤 설정을 On 해야 렌더링 상황을 확인할 수 있나요?
   - [ ] memo는 어떤 조건일때 다시 렌더링을 하지 않나요?
   - [ ] `TodoItem.jsx` 컴포넌트에서 memo를 사용하였지만 왜 렌더링 최적화가 되지 않았나요?
+- **useCallback**을 사용하기 전에 `TodoItem.jsx` 컴포넌트를 최적화하기
 
 4. **useCallback**을 통해 함수 재생성을 방지합니다.
 
@@ -50,14 +51,14 @@ rsync -av --exclude="node_modules" ./todolist-ui/ ./todolist-phase01/
 
 - 다음 질문에 답해 보세요
   - [ ] **Context**을 사용하면 memo를 사용하여 렌더링 최적화한 `TodoItem.jsx`가 다시 리렌더링이 됩니다.  
-        왜 리렌더링이 되는 원인과 어떻게 해결해야 하는지 말해보세요.
+         왜 리렌더링이 되는 원인과 어떻게 해결해야 하는지 말해보세요.
 
 6. **Context** 를 state, dispatch 로 분리하여 최적화 하세요
 
 - 다음 질문에 답해 보세요
   - [ ] 왜 state 와 dispatch로 분리해야 하나요?
   - [ ] dispatch에 들어갈 메서드들은 useMemo를 사용해야 합니다.  
-        왜 사용해야 하는지 정확히 알고 있나요?
+         왜 사용해야 하는지 정확히 알고 있나요?
 
 ```bash
 # for Windows Powershell
