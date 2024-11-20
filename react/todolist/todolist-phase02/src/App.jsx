@@ -1,5 +1,5 @@
 import './App.css';
-import { useRef, useReducer } from 'react';
+import { useRef, useReducer, useCallback } from 'react';
 
 import Header from './components/Header';
 import List from './components/List';
@@ -25,7 +25,7 @@ function App() {
 
   const [todos, dispatch] = useReducer(todoReducer, []);
 
-  const onCreate = (content) => {
+  const onCreate = useCallback((content) => {
     const newTodo = {
       id: idRef.current++,
       isDone: false,
@@ -34,15 +34,15 @@ function App() {
     };
 
     dispatch({ type: 'create', data: newTodo });
-  };
+  }, []);
 
-  const onUpdate = (targetId) => {
+  const onUpdate = useCallback((targetId) => {
     dispatch({ type: 'update', targetId });
-  };
+  }, []);
 
-  const onDelete = (targetId) => {
+  const onDelete = useCallback((targetId) => {
     dispatch({ type: 'delete', targetId });
-  };
+  }, []);
 
   return (
     <div className="App">
