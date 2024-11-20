@@ -60,6 +60,10 @@ rsync -av --exclude="node_modules" ./todolist-ui/ ./todolist-phase01/
   - [ ] dispatch에 들어갈 메서드들은 useMemo를 사용해야 합니다.  
          왜 사용해야 하는지 정확히 알고 있나요?
 
+강의 자료
+
+- https://goongoguma.github.io/2021/04/26/When-to-useMemo-and-useCallback/
+
 ```bash
 # for Windows Powershell
 Remove-Item -Path "./todolist-phase02/*" -Recurse -Force
