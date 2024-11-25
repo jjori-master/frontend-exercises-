@@ -10,31 +10,31 @@ import Notfound from './pages/Notfound';
 const mockData = [
   {
     id: 1,
-    createdDate: new Date().getTime(),
+    createdDate: new Date('2024-11-25').getTime(),
     emotionId: 1,
     content: '오늘은 너무 행복하고 기분 좋은 하루였다!',
   },
   {
     id: 2,
-    createdDate: new Date().getTime(),
+    createdDate: new Date('2024-11-24').getTime(),
     emotionId: 2,
     content: '기분이 꽤 괜찮았다. 특별히 나쁜 일은 없었다.',
   },
   {
     id: 3,
-    createdDate: new Date().getTime(),
+    createdDate: new Date('2024-10-07').getTime(),
     emotionId: 3,
     content: '조금 우울한 기분이 들었지만, 괜찮았다.',
   },
   {
     id: 4,
-    createdDate: new Date().getTime(),
+    createdDate: new Date('2024-10-08').getTime(),
     emotionId: 4,
     content: '기분이 많이 가라앉았다. 안 좋은 하루였다.',
   },
   {
     id: 5,
-    createdDate: new Date().getTime(),
+    createdDate: new Date('2024-9-06').getTime(),
     emotionId: 5,
     content: '정말 힘든 하루였다. 모든 게 잘 풀리지 않았다.',
   },
