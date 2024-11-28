@@ -1,65 +1,77 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import { useReducer, useRef, createContext } from 'react';
+import { useReducer, useRef, createContext, useEffect } from 'react';
 import Home from './pages/Home';
 import New from './pages/New';
 import Diary from './pages/Diary';
 import Edit from './pages/Edit';
 import Notfound from './pages/Notfound';
-
-const mockData = [
-  {
-    id: 1,
-    createdDate: new Date('2024-11-25').getTime(),
-    emotionId: 1,
-    content: '오늘은 너무 행복하고 기분 좋은 하루였다!',
-  },
-  {
-    id: 2,
-    createdDate: new Date('2024-11-24').getTime(),
-    emotionId: 2,
-    content: '기분이 꽤 괜찮았다. 특별히 나쁜 일은 없었다.',
-  },
-  {
-    id: 3,
-    createdDate: new Date('2024-10-07').getTime(),
-    emotionId: 3,
-    content: '조금 우울한 기분이 들었지만, 괜찮았다.',
-  },
-  {
-    id: 4,
-    createdDate: new Date('2024-10-08').getTime(),
-    emotionId: 4,
-    content: '기분이 많이 가라앉았다. 안 좋은 하루였다.',
-  },
-  {
-    id: 5,
-    createdDate: new Date('2024-9-06').getTime(),
-    emotionId: 5,
-    content: '정말 힘든 하루였다. 모든 게 잘 풀리지 않았다.',
-  },
-];
+import { useState } from 'react';
 
 function reducer(state, action) {
+  let nextState;
+
   switch (action.type) {
-    case 'CREATE':
-      return [action.data, ...state];
-    case 'UPDATE':
-      return state.map(item =>
+    case 'INIT':
+      return action.data;
+
+    case 'CREATE': {
+      nextState = [action.data, ...state];
+      break;
+    }
+
+    case 'UPDATE': {
+      nextState = state.map(item =>
         String(item.id) === String(action.data.id) ? action.data : item
       );
-    case 'DELETE':
-      return state.filter(item => String(item.id) !== String(action.id));
+      break;
+    }
+
+    case 'DELETE': {
+      nextState = state.filter(item => String(item.id) !== String(action.id));
+      break;
+    }
+
     default:
       return state;
   }
+
+  localStorage.setItem('diary', JSON.stringify(nextState));
+  return nextState;
 }
 export const DiaryStateContext = createContext();
 export const DiaryDispatchContext = createContext();
 
 function App() {
-  const [data, dispatch] = useReducer(reducer, mockData);
-  const idRef = useRef(6);
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, dispatch] = useReducer(reducer, []);
+  const idRef = useRef(0);
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('diary');
+    if (!storedData) {
+      setIsLoading(false);
+      return;
+    }
+
+    const parsedDate = JSON.parse(storedData);
+    if (!Array.isArray(parsedDate)) {
+      setIsLoading(false);
+      return;
+    }
+
+    const maxId = Math.max(...parsedDate.map(item => Number(item.id)), 0);
+    idRef.current = maxId + 1;
+
+    dispatch({
+      type: 'INIT',
+      data: parsedDate,
+    });
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
 
   // 새로운 일기 추가
   const onCreate = (createdDate, emotionId, content) => {
@@ -92,6 +104,10 @@ function App() {
       id,
     });
   };
+
+  if (isLoading) {
+    return <div>데이터 로딩 중입니다....</div>;
+  }
 
   return (
     <>
