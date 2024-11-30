@@ -1,12 +1,28 @@
 import './App.css';
-import { useState, useRef } from 'react';
+import { useRef, useReducer } from 'react';
 
 import Header from './components/Header';
 import List from './components/List';
 import Editor from './components/Editor';
 
+const todoReducer = (todos, action) => {
+  switch (action.type) {
+    case 'CREATE':
+      return [action.data, ...todos];
+    case 'UPDATE':
+      return todos.map(todo =>
+        todo.id === action.targetId ? { ...todo, isDone: !todo.isDone } : todo
+      );
+    case 'DELETE':
+      return todos.filter(todo => todo.id !== action.targetId);
+    default:
+      return todos;
+  }
+};
+
 function App() {
-  const [todos, setTodos] = useState([]);
+  const [todos, dispatch] = useReducer(todoReducer, []);
+
   const idRef = useRef(0);
 
   const onCreate = content => {
@@ -17,19 +33,24 @@ function App() {
       date: new Date().getTime(),
     };
 
-    setTodos([newTodo, ...todos]);
+    dispatch({
+      type: 'CREATE',
+      data: newTodo,
+    });
   };
 
   const onUpdate = targetId => {
-    setTodos(
-      todos.map(todo =>
-        todo.id === targetId ? { ...todo, isDone: !todo.isDone } : todo
-      )
-    );
+    dispatch({
+      type: 'UPDATE',
+      targetId,
+    });
   };
 
   const onDelete = targetId => {
-    setTodos(todos.filter(todo => todo.id !== targetId));
+    dispatch({
+      type: 'DELETE',
+      targetId,
+    });
   };
 
   return (
