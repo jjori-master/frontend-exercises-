@@ -1,6 +1,10 @@
 import './TodoItem.css';
 
-const TodoItem = ({ id, isDone, content, date, onUpdate, onDelete }) => {
+import { useContext } from 'react';
+import { TodoDispatchContext } from '../App';
+
+const TodoItem = ({ id, isDone, content, date }) => {
+  const { onUpdate, onDelete } = useContext(TodoDispatchContext);
   return (
     <div className="TodoItem">
       <input type="checkbox" checked={isDone} onChange={() => onUpdate(id)} />

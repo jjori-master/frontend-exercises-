@@ -1,5 +1,5 @@
 import './App.css';
-import { useRef, useReducer } from 'react';
+import { useRef, useReducer, createContext } from 'react';
 
 import Header from './components/Header';
 import List from './components/List';
@@ -20,6 +20,9 @@ const todoReducer = (todos, action) => {
   }
 };
 
+export const TodoStateContext = createContext();
+export const TodoDispatchContext = createContext();
+
 function App() {
   const [todos, dispatch] = useReducer(todoReducer, []);
 
@@ -33,31 +36,26 @@ function App() {
       date: new Date().getTime(),
     };
 
-    dispatch({
-      type: 'CREATE',
-      data: newTodo,
-    });
+    dispatch({ type: 'CREATE', data: newTodo });
   };
 
   const onUpdate = targetId => {
-    dispatch({
-      type: 'UPDATE',
-      targetId,
-    });
+    dispatch({ type: 'UPDATE', targetId });
   };
 
   const onDelete = targetId => {
-    dispatch({
-      type: 'DELETE',
-      targetId,
-    });
+    dispatch({ type: 'DELETE', targetId });
   };
 
   return (
     <div className="App">
       <Header />
-      <Editor onCreate={onCreate} />
-      <List todos={todos} onUpdate={onUpdate} onDelete={onDelete} />
+      <TodoStateContext.Provider value={todos}>
+        <TodoDispatchContext.Provider value={{ onCreate, onUpdate, onDelete }}>
+          <Editor />
+          <List />
+        </TodoDispatchContext.Provider>
+      </TodoStateContext.Provider>
     </div>
   );
 }
